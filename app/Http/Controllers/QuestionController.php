@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -88,9 +93,8 @@ class QuestionController extends Controller
      */
     public function update(QuestionStoreRequest $request, Question $question)
     {
-        if (Gate::denies('update-question', $question)) {
-            abort(403, "Access Denied");
-        }
+        //authorize using policy
+        $this->authorize('update', $question);
         $question->update([
             'title' => $request->title,
             'body' => $request->body,
@@ -106,9 +110,11 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        if (Gate::denies('delete-question', $question)) {
-            abort(403, "Access Denied");
-        }
+        //authorize using gate
+//        if (Gate::denies('delete-question', $question)) {
+//            abort(403, "Access Denied");
+//        }
+        $this->authorize('delete', $question);
         $question->delete();
         return redirect(route('questions.index'))->with('success', "Your question has been deleted");
     }
