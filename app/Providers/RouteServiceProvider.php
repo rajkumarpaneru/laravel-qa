@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Question;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    const HOME = '/home';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -31,7 +32,9 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
+        Route::bind('slug', function ($slug) {
+            return Question::where('slug', $slug)->first() ? Question::where('slug', $slug)->first() : abort(404);
+        });
         parent::boot();
     }
 
