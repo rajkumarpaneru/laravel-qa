@@ -52,4 +52,13 @@ class User extends Authenticatable
 //        return route("users.show", $this->id);
         return '#';
     }
+
+    public function getAvatarAttribute()
+    {
+        $email = $this->email;
+        $size = 32;
+//        return null;
+        return "https://www.gravatar.com/avatar/" . md5(strtolower(trim('raj@mail.com'))) . "?s=32";
+//        return "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?s=" . $size;
+    }
 }
