@@ -31,3 +31,5 @@ Route::resource('questions.answers', 'AnswerController')->except(['index', 'crea
 
 Route::post('questions/{question}/favorites', 'FavoritesController@store')->name('questions.favorite');
 Route::delete('questions/{question}/favorites', 'FavoritesController@delete')->name('questions.unfavorite');
+
+Route::post('/questions/{question}/vote', 'VoteQuestionController');
