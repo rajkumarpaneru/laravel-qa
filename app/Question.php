@@ -51,7 +51,7 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-        return $this->body;
+        return clean($this->body);
     }
 
     public function acceptBestAnswer(Answer $answer)
