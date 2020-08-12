@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class Question extends Model
 {
     use VotableTrait;
-    
+
     protected $guarded = [];
 
     public function user()
@@ -78,6 +78,11 @@ class Question extends Model
     public function getFavoritesCountAttribute()
     {
         return $this->favorites()->count();
+    }
+
+    public function getExcerptAttribute()
+    {
+        return Str::limit(strip_tags($this->body), 300);
     }
 
 }
